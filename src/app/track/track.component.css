@@ -1,0 +1,121 @@
+.track-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+}
+.animation {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+.victor {
+  width: 400px;
+  height: 5px;
+  background-color: #000;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+fa-icon {
+  font-size: 70px;
+  color: #000000;
+}
+.done {
+  color: #6df159;
+}
+h5 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+.center {
+  text-align: center;
+}
+
+.line {
+  width: 200px;
+  height: 5px;
+  background-color: #6df159;
+  position: relative;
+  animation: moveRight 1.8s infinite ease-in;
+  -webkit-animation: moveRight 1.8s infinite ease-in;
+}
+
+@keyframes moveRight {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 100%;
+  }
+}
+h1 {
+  font-size: 65px;
+  font-weight: 400;
+}
+h3 {
+  font-weight: 300;
+  font-size: 20px;
+  color: #5f5f5f;
+}
+button {
+  outline: 0;
+  border: 0;
+  background-color: #d70000;
+  color: #fff;
+  font-size: 34px;
+  padding: 7px 40px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  margin: 40px 0;
+  cursor: pointer;
+}
+@media (max-width: 1250px) {
+  .victor {
+    width: 300px;
+  }
+}
+@media (max-width: 1024px) {
+  .victor {
+    width: 180px;
+  }
+}
+@media (max-width: 768px) {
+  .animation {
+    align-items: center;
+    flex-direction: column;
+    gap: 90px;
+  }
+  .victor {
+    rotate: 90deg;
+    width: 150px;
+  }
+  .track-container {
+    position: static;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    text-align: center;
+  }
+  h1 {
+    font-size: 45px;
+  }
+  h3 {
+    font-size: 13px;
+  }
+  button {
+    font-size: 30px;
+  }
+}

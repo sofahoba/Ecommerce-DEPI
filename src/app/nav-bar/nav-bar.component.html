@@ -1,0 +1,145 @@
+<div class="top_nav w-100 text-center">
+  FREE delivery & 40% Discount for next 3 orders! Place your 1st order in.
+</div>
+<nav class="main_nav">
+  <div class="first_nav align-items-center d-flex w-100">
+    <div class="location_time">
+      <fa-icon [icon]="location"></fa-icon> We deliver to you every day from
+      <span>00:00 to 00:00</span>
+    </div>
+    <div class="features">
+      <button type="button">English</button>
+      <button type="button">EGP</button>
+      <button type="button">Order Tracking</button>
+    </div>
+  </div>
+  <div class="saperator"></div>
+  <div class="mid_nav align-items-center justify-content-between">
+    <div class="mobOnly">
+      <div class="logo d-flex align-items-center">
+        <img src="../../assets/logo.svg" width="200" alt="..." />
+      </div>
+      <div class="group-mob">
+        <div class="user_info_mob align-items-center">
+          <ng-container *ngIf="!fakeStoreService.isLoggedIn(); else loggedInMobile">
+            <div id="account1" class="d-flex align-items-center" (click)="navigateAndClose('/login')">
+              <fa-icon class="user" [icon]="user"></fa-icon>
+              <p>Sign In <span>Account</span></p>
+            </div>
+          </ng-container>
+          <ng-template #loggedInMobile>
+            <div id="account1" class="d-flex align-items-center" (click)="logoutMobile()">
+              <fa-icon class="user" [icon]="signOut"></fa-icon>
+              <p>Sign Out</p>
+            </div>
+          </ng-template>
+          <a (click)="navigateAndClose('/wishlist')" class="wishlist">
+            <i class="fa-regular fa-heart"></i>
+            <span class="count" *ngIf="wishlistItemCount > 0">{{ wishlistItemCount }}</span>
+          </a>
+          <a (click)="navigateAndClose('/cart')" class="cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+          </a>
+        </div>
+        <button
+          class="navbar-toggler"
+          type="button"
+          (click)="toggleMobileMenu()"
+        >
+          <fa-icon class="bars" [icon]="bars"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="search_bar">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="searchProducts()"
+        (blur)="hideDropdown()"
+        placeholder="Search for products, categories or brands..."
+      />
+      <fa-icon class="magnifying" [icon]="magnifying"></fa-icon>
+      <div class="search-dropdown" *ngIf="showDropdown && searchResults.length > 0">
+        <ul>
+          <li *ngFor="let result of searchResults" (click)="navigateToProduct(result.id)">
+            {{ result.title }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="user_info align-items-center">
+      <ng-container *ngIf="!fakeStoreService.isLoggedIn(); else loggedIn">
+        <div id="account" class="d-flex align-items-center" routerLink="/login">
+          <fa-icon class="user" [icon]="user"></fa-icon>
+          <p>Sign In <span>Account</span></p>
+        </div>
+      </ng-container>
+      <ng-template #loggedIn>
+        <div id="account" class="d-flex align-items-center" (click)="logout()">
+          <fa-icon class="user" [icon]="signOut"></fa-icon>
+          <p>Sign Out</p>
+        </div>
+        <a routerLink="/wishlist" class="wishlist">
+          <fa-icon class="iconsize" [icon]="heart"></fa-icon>
+          <span class="count" *ngIf="wishlistItemCount > 0">{{ wishlistItemCount }}</span>
+        </a>
+        <a routerLink="/cart" class="cart">
+          <fa-icon class="iconsize" [icon]="cart"></fa-icon>
+          <span class="count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+        </a>
+      </ng-template>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand navbar-light">
+    <ul class="navbar-nav desktop-menu">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/">Home</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" (click)="toggleCategoryDropdown($event)">
+          <img class="grid" src="../../assets/grid_home_menu_table_icon.svg" alt=".." />
+          All Categories <fa-icon [icon]="down"></fa-icon>
+        </a>
+        <ul class="dropdown-menu" [class.show]="isCategoryDropdownOpen" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" [routerLink]="['/category', 'electronics']" (click)="closeCategoryDropdown()">Electronics</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/category', 'jewelery']" (click)="closeCategoryDropdown()">Jewelery</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/category', 'men\'s clothing']" (click)="closeCategoryDropdown()">Men's clothing</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/category', 'women\'s clothing']" (click)="closeCategoryDropdown()">Women's clothing</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/products">Products</a>
+      </li>
+    </ul>
+  </nav>
+</nav>
+
+<div class="mobile-menu" [class.active]="isMobileMenuOpen">
+  <div class="mobile-menu-header">
+    <h5>Menu</h5>
+    <button (click)="toggleMobileMenu()">
+      <fa-icon [icon]="x"></fa-icon>
+    </button>
+  </div>
+  <ul class="mobile-menu-items">
+    <li><a (click)="navigateAndClose('/')">Home</a></li>
+    <li>
+      <a (click)="toggleMobileCategoryDropdown()">
+        All Categories <fa-icon [icon]="down"></fa-icon>
+      </a>
+      <ul [class.show]="isMobileCategoryDropdownOpen">
+        <li><a (click)="navigateAndClose('/category/electronics')">Electronics</a></li>
+        <li><a (click)="navigateAndClose('/category/jewelery')">Jewelery</a></li>
+        <li><a (click)="navigateAndClose('/category/men\'s clothing')">Men's clothing</a></li>
+        <li><a (click)="navigateAndClose('/category/women\'s clothing')">Women's clothing</a></li>
+      </ul>
+    </li>
+    <li><a (click)="navigateAndClose('/products')">Products</a></li>
+    <li><a (click)="navigateAndClose('/wishlist')">Wish List</a></li>
+    <li><a (click)="navigateAndClose('/cart')">Cart</a></li>
+    <li><a (click)="navigateAndClose('/track')">Order Tracking</a></li>
+  </ul>
+</div>

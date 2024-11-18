@@ -1,0 +1,61 @@
+<section class="shopping-cart">
+  <div class="container">
+    <h2>Cart</h2>
+
+    <div *ngIf="cartItems.length === 0" class="empty-cart-message">
+      Your cart is empty. <a routerLink="/products">Continue shopping</a>
+    </div>
+
+    <div *ngIf="cartItems.length > 0" class="cart-content">
+      <div class="cart-items">
+        <div *ngFor="let item of cartItems" class="item-card">
+          <div class="item-details">
+            <div class="item-info">
+              <a [routerLink]="['/product', item.id]" class="item-image">
+                <img [src]="item.image" [alt]="item.title" />
+              </a>
+              <div class="item-description">
+                <a [routerLink]="['/product', item.id]" class="item-title">{{ item.title }}</a>
+                <div class="item-actions">
+                  <button class="add-favorites"><fa-icon [icon]="heart" style="padding-right: 8px;" />Add to Favorites</button>
+                  <button class="remove-item" (click)="removeItem(item.id)">
+                    <fa-icon [icon]="x" style="padding-right: 8px;" />Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="item-quantity-price">
+              <div class="quantity-control">
+                <button type="button" class="decrement-btn" (click)="updateQuantity(item.id, item.quantity - 1)" [disabled]="item.quantity <= 1">-</button>
+                <input type="number" class="quantity-input" [(ngModel)]="item.quantity" (ngModelChange)="updateQuantity(item.id, $event)" min="1" />
+                <button type="button" class="increment-btn" (click)="updateQuantity(item.id, item.quantity + 1)">+</button>
+              </div>
+              <div class="item-price">
+                <p class="mb-0">${{ item.price * item.quantity | number:'1.2-2' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-summary-container">
+        <div class="order-summary">
+          <p class="summary-title">Order summary</p>
+
+          <div class="summary-details">
+            <p><span>Original price:</span> <span>${{ totalPrice | number:'1.2-2' }}</span></p>
+            <p><span>Savings:</span> <span>-$0.00</span></p>
+            <p><span>Store Pickup:</span> <span>$0.00</span></p>
+            <p><span>Tax:</span> <span>${{ totalPrice * 0.1 | number:'1.2-2' }}</span></p>
+            <p><span>Total:</span> <span>${{ totalPrice * 1.1 | number:'1.2-2' }}</span></p>
+          </div>
+
+          <button class="checkout-btn" (click)="checkout()">Proceed to Checkout</button>
+          <a routerLink="/products" class="continue-shopping">
+            Continue Shopping <fa-icon [icon]="right" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

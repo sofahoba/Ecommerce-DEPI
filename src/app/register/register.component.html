@@ -1,0 +1,45 @@
+<div class="form">
+  <h1 class="fw-bold">Create an Account</h1>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <p class="desc">Enter your information below to proceed. If you already have an account, please log in instead.</p>
+    <div class="flex">
+      <div>
+        <input placeholder="First Name" id="firstName" type="text" formControlName="firstName">
+        <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)">
+          <small class="error-message" *ngIf="firstName?.errors?.['required']">First name is required.</small>
+          <small class="error-message" *ngIf="firstName?.errors?.['minlength']">First name must be at least 2 characters long.</small>
+        </div>
+      </div>
+
+      <div>
+        <input placeholder="Last Name" id="lastName" type="text" formControlName="lastName">
+        <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)">
+          <small class="error-message" *ngIf="lastName?.errors?.['required']">Last name is required.</small>
+          <small class="error-message" *ngIf="lastName?.errors?.['minlength']">Last name must be at least 2 characters long.</small>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <input placeholder="Email" id="email" type="email" formControlName="email">
+      <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+        <small class="error-message" *ngIf="email?.errors?.['required']">Email is required.</small>
+        <small class="error-message" *ngIf="email?.errors?.['email']">Please enter a valid email address.</small>
+      </div>
+    </div>
+
+    <div>
+      <input placeholder="Password" id="password" type="password" formControlName="password">
+      <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+        <small class="error-message" *ngIf="password?.errors?.['required']">Password is required.</small>
+        <small class="error-message" *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  </form>
+  <h6 class="mt-3">Already have an account? <span routerLink="/login">Login</span></h6>
+  <div *ngIf="registrationError" class="error-message">
+    {{ registrationError }}
+  </div>
+</div>

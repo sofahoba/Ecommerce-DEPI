@@ -1,0 +1,13 @@
+.font-sans {
+  font-family: 'Arial', sans-serif;
+}
+
+.badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.badge-outline {
+  border: 1px solid currentColor;
+}
+

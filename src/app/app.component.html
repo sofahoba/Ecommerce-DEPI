@@ -1,0 +1,11 @@
+<ng-container *ngIf="!isStandalonePage; else standaloneContent">
+  <app-nav-bar></app-nav-bar>
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+  <app-footer></app-footer>
+</ng-container>
+
+<ng-template #standaloneContent>
+  <router-outlet></router-outlet>
+</ng-template>

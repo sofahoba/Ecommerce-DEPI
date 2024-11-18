@@ -1,0 +1,95 @@
+.landing-padge {
+  background: url(../../assets/pexels-agafonova-photo-3500249-5604520.jpg);
+  height: 80vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  margin: 15px 25px;
+  margin-bottom: 30px;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+  box-shadow: 0 2px 3px #6c6c6c;
+}
+
+.content {
+  position: relative;
+  z-index: 5;
+  width: 800px;
+  text-align: center;
+}
+.content h1 {
+  color: #fff;
+  text-shadow: 0 4px 4px #00000034;
+  padding-bottom: 90px;
+}
+.content a {
+  background-color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 20px 50px;
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  -ms-border-radius: 25px;
+  -o-border-radius: 25px;
+  text-decoration: none;
+  color: #000;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  padding-right: 70px;
+}
+.content a:hover {
+  box-shadow: 8px 8px 0 #000;
+  background-color: #ebebeb;
+}
+@media (max-width: 900px) {
+  .landing-padge {
+    background-position: bottom;
+  }
+  .content {
+    width: 100%;
+    padding: 0 30px;
+  }
+}
+@media (max-width: 375px) {
+  .content a {
+    font-size: 25px;
+    padding: 20px 35px;
+  }
+}
+.bounce {
+  animation: bounce;
+  -webkit-animation: bounce;
+  animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: 1s;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  position: absolute;
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -ms-transition: 1s;
+  -o-transition: 1s;
+  margin-left: 10px;
+  margin-top: 3px;
+}
+@keyframes bounce {
+  0% {
+    padding-left: 20px;
+  }
+  50% {
+    padding-left: 0;
+  }
+  100% {
+    padding-left: 20px;
+  }
+}

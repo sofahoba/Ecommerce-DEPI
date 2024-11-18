@@ -1,0 +1,21 @@
+<section class="product_slider">
+  <div class="link_products">
+    <div class="heading">
+      <h3>Featured Products</h3>
+      <p>Check out our latest offerings!</p>
+    </div>
+    <a class="view_all" href="#">View All <fa-icon class="bounce" [icon]="right"></fa-icon></a>
+  </div>
+  <div class="product-container">
+    <swiper-container #swiper>
+      <swiper-slide *ngFor="let product of products">
+        <div class="card">
+          <img [src]="product.image" [alt]="product.title" style="max-width: 100%; height: 200px; object-fit: contain;">
+          <h4>{{product.title | slice:0:20}}{{product.title.length > 20 ? '...' : ''}}</h4>
+          <p>{{product.category}}</p>
+          <p>${{product.price}}</p>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+</section>

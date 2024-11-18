@@ -1,0 +1,128 @@
+<div class="container">
+  <h1>Let's Shop Now</h1>
+  <p class="desc">
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque esse minus
+    exercitationem.
+  </p>
+  <div class="row">
+    <!-- Filter Section -->
+    <div class="col-lg-3 pb-5">
+      <h5>
+        <span><fa-icon [icon]="filter" /> </span>Filter
+      </h5>
+      <div class="filter-section">
+        <!-- Category Filter -->
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select
+            id="category"
+            class="form-select"
+            [(ngModel)]="selectedCategory"
+            (change)="onCategoryChange()"
+          >
+            <option value="">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category">
+              {{ category | titlecase }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Size Filter -->
+        <div class="mb-3">
+          <label for="size" class="form-label">Size</label>
+          <select
+            id="size"
+            class="form-select"
+            [(ngModel)]="selectedSize"
+            (change)="onSizeChange()"
+          >
+            <option value="">All Sizes</option>
+            <option *ngFor="let size of sizes" [value]="size">
+              {{ size }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Color Filter -->
+        <div class="mb-3">
+          <label for="color" class="form-label">Color</label>
+          <select
+            id="color"
+            class="form-select"
+            [(ngModel)]="selectedColor"
+            (change)="onColorChange()"
+          >
+            <option value="">All Colors</option>
+            <option *ngFor="let color of colors" [value]="color">
+              {{ color }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="mb-3">
+          <label for="price-range" class="form-label range">Price Range</label>
+          <input
+            type="range"
+            class="form-range"
+            id="price-range"
+            [min]="priceRange.min"
+            [max]="priceRange.max"
+            [(ngModel)]="selectedPriceRange"
+            (change)="onPriceRangeChange()"
+          />
+          <div class="d-flex justify-content-between">
+            <span>${{ priceRange.min }}</span>
+            <span>${{ selectedPriceRange }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Cards -->
+    <div class="col-lg-9">
+      <div class="row">
+        @for(item of data; track item.id){
+        <div class="col-md-4 flex">
+          <div class="card" [routerLink]="['/product', item.id]">
+            <div class="card-img">
+              <button
+                class="heart-icon"
+                aria-label="Add to Wishlist"
+                (click)="toggleWishlist($event, item)"
+              >
+                <fa-icon
+                  [icon]="item.isInWishlist ? solidHeart : regularHeart"
+                  [ngClass]="{ 'wishlist-active': item.isInWishlist }"
+                ></fa-icon>
+              </button>
+              <img src="{{ item.image }}" alt="Product Image" />
+            </div>
+            <div class="card-body">
+              <h6 class="card-title" [title]="item.title">
+                {{ item.title | truncate : 3 }}
+              </h6>
+              <!-- Star Ratings as Buttons -->
+              <div class="star-rating">
+                @for (filled of generateStars(item.rating.rate); track $index) {
+                <fa-icon [icon]="star" [class.filled]="filled"></fa-icon>
+                }
+                <span
+                  class="rating-pill"
+                  [ngClass]="getRatingClass(item.rating.rate)"
+                >
+                  {{ item.rating.rate | number : "1.1-1" }}
+                </span>
+              </div>
+              <div class="price">${{ item.price }}</div>
+              <button class="btn btn-cart" (click)="addToCart($event, item.id)">
+                ADD TO CART
+              </button>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

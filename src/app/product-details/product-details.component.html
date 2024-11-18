@@ -1,0 +1,86 @@
+<div class="container-fluid py-4">
+  <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center vh-100">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && productDetails" class="card shadow-lg mx-auto mb-4" style="max-width: 1000px;">
+    <div class="row g-0">
+      <div class="col-md-6 position-relative">
+        <div class="ratio ratio-1x1">
+          <img [src]="productDetails.images[currentImageIndex]" [alt]="productDetails.title" class="img-fluid object-fit-cover">
+        </div>
+        <div class="position-absolute bottom-0 start-0 end-0 bg-dark bg-opacity-50 p-2 d-flex justify-content-between align-items-center">
+          <button (click)="prevImage()" class="btn btn-outline-light rounded-circle">
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+          </button>
+          <div class="text-white small">
+            {{ currentImageIndex + 1 }} / {{ productDetails.images.length }}
+          </div>
+          <button (click)="nextImage()" class="btn btn-outline-light rounded-circle">
+            <fa-icon [icon]="faChevronRight"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card-body d-flex flex-column h-100">
+          <div class="mb-auto">
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start mb-3">
+              <div>
+                <p class="text-black mb-1 text-capitalize">{{ productDetails.category }}</p>
+                <h2 class="card-title h4 fw-bold">{{ productDetails.title }}</h2>
+              </div>
+              <span class="h5 fw-semibold mt-2 mt-sm-0">${{ productDetails.price }}</span>
+            </div>
+            <p class="card-text small text-muted mb-3">{{ productDetails.description }}</p>
+            <div class="d-flex align-items-center gap-2 mb-4">
+              <div class="d-flex">
+                <fa-icon *ngFor="let filled of generateStars(productDetails.rating.rate)"
+                         [icon]="faStar"
+                         [ngClass]="filled ? 'text-warning' : 'text-muted'">
+                </fa-icon>
+              </div>
+              <span class="badge bg-success bg-opacity-10 text-success">{{ productDetails.rating.rate }}</span>
+              <span class="small text-muted">({{ productDetails.rating.count }} reviews)</span>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <button (click)="addToCart()" [disabled]="addingToCart || addedToCart" class="btn btn-dark flex-grow-1 d-inline-flex align-items-center justify-content-center">
+              <fa-icon [icon]="faShoppingCart" class="me-2"></fa-icon>
+              {{ addingToCart ? 'Adding...' : addedToCart ? 'Added!' : 'Add to Cart' }}
+            </button>
+            <button (click)="toggleWishlist()" [ngClass]="{'btn-outline-danger': isInWishlist, 'btn-outline-secondary': !isInWishlist}" class="btn">
+              <fa-icon [icon]="faHeart" [ngClass]="{'text-danger': isInWishlist}"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && productDetails" class="related-products mt-5">
+    <h3 class="mb-4">Related Products</h3>
+    <swiper-container
+      [slidesPerView]="3"
+      [spaceBetween]="20"
+      [navigation]="true"
+      [breakpoints]="{
+        '640': { slidesPerView: 1, spaceBetween: 20 },
+        '768': { slidesPerView: 2, spaceBetween: 30 },
+        '1024': { slidesPerView: 3, spaceBetween: 30 }
+      }"
+    >
+      <swiper-slide *ngFor="let product of relatedProducts">
+        <div class="card h-100">
+          <img [src]="product.image" [alt]="product.title" class="card-img-top p-3" style="height: 200px; object-fit: contain;">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ product.title | truncate:30 }}</h5>
+            <p class="card-text mt-auto">${{ product.price }}</p>
+            <a [routerLink]="['/product', product.id]" class="btn btn-outline-dark mt-2">View Details</a>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+</div>
